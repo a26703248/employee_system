@@ -2,8 +2,8 @@ server:
   port: 8080
 spring:
   datasource:
-    username: root
-    url: jdbc:mysql://localhost:3306/vueadmin
+    username: developer
+    url: jdbc:mysql://192.168.0.24:3306/vueadmin
     driverClassName: com.mysql.cj.jdbc.Driver
     password: 'a0909007892'
 
@@ -11,6 +11,3 @@ logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
-
-mybatis-plus:
-  mapperLocations: "classpath*:/mapper/**/*Mapper.xml"
