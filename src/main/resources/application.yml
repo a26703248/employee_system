@@ -2,12 +2,22 @@ server:
   port: 8080
 spring:
   datasource:
-    username: developer
-    url: jdbc:mysql://192.168.0.24:3306/vueadmin
+    url: jdbc:mysql://192.168.0.200:3306/vueadmin
     driverClassName: com.mysql.cj.jdbc.Driver
+    username: developer
     password: 'a0909007892'
+  security:
+    user:
+      name: user
+      password: root
 
 logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+side-project:
+  jwt:
+    header: Authorization
+    expire: 604800 # 7 天(秒單位)
+    secret: abcdefghijklmnopqrstuvwxyz12345
