@@ -13,6 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/employee_system/sys-menu")
-public class SysMenuController {
+public class SysMenuController extends BaseController {
 
 }

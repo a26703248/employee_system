@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
 public class CodeGenerator {
+
   protected static List<String> getTables(String tables) {
     return "all".equals(tables) ? Collections.emptyList() : Arrays.asList(tables.split(","));
   }
@@ -27,6 +28,10 @@ public class CodeGenerator {
     String rootPath = "./";
     String javaPath = rootPath + "src/main/java/";
     String mapperPath = rootPath + "/src/main/resources/mapper";
+    List<String> superEntityColumns = Arrays.asList("id", "created", "updated", "status");
+    String baseEntity = "BaseEntity";
+    String baseController = "BaseController";
+
     FreemarkerTemplateEngine fte = new FreemarkerTemplateEngine();
     FastAutoGenerator.create(url, username, password)
         .globalConfig(builder -> {
@@ -40,8 +45,8 @@ public class CodeGenerator {
               .pathInfo(Collections.singletonMap(OutputFile.xml, mapperPath));
         })
         .strategyConfig((scanner, builder) -> builder.addInclude(getTables(scanner.apply("請輸入資料表名稱(多個資料表請用','區分)")))
-            .controllerBuilder().enableRestStyle().enableHyphenStyle()
-            .entityBuilder().enableLombok()
+            .entityBuilder().enableLombok().superClass(baseEntity).addSuperEntityColumns(superEntityColumns).fileOverride() // entity
+            .controllerBuilder().enableRestStyle().enableHyphenStyle().superClass(baseController).fileOverride() // controller
             .build())
         .templateEngine(fte)
         .execute();

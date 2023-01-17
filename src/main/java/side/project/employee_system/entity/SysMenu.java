@@ -1,16 +1,13 @@
 package side.project.employee_system.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.time.LocalDateTime;
+
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author howard
@@ -19,12 +16,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("sys_menu")
-public class SysMenu implements Serializable {
+public class SysMenu extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
-
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
 
     /**
      * 父選單ID，根選單為 0
@@ -39,7 +33,7 @@ public class SysMenu implements Serializable {
     private String path;
 
     /**
-     * 權限 多個用逗號分割，如: user:list,user:create 
+     * 權限 多個用逗號分割，如: user:list,user:create
      */
     private String perms;
 
@@ -54,10 +48,4 @@ public class SysMenu implements Serializable {
      * 選單圖示
      */
     private String icon;
-
-    private LocalDateTime created;
-
-    private LocalDateTime updated;
-
-    private Integer status;
 }
