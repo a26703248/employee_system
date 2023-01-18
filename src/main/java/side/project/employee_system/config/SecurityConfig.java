@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
@@ -18,6 +19,7 @@ import side.project.employee_system.security.JwtAuthenticationEntryPoint;
 import side.project.employee_system.security.JwtAuthenticationFilter;
 import side.project.employee_system.security.LoginFailureHandle;
 import side.project.employee_system.security.LoginSuccessHandle;
+import side.project.employee_system.security.UserDetailServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -35,6 +37,14 @@ public class SecurityConfig {
   @Autowired
   private JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
+  @Autowired
+  private UserDetailServiceImpl userDetailServiceImpl;
+
+  @Bean
+  public BCryptPasswordEncoder bcrCryptPasswordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
+
   @Bean
   public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
     return new JwtAuthenticationFilter();
@@ -50,7 +60,7 @@ public class SecurityConfig {
   public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder,
       UserDetailsService userDetailService) throws Exception {
     return http.getSharedObject(AuthenticationManagerBuilder.class)
-        .userDetailsService(userDetailService)
+        .userDetailsService(userDetailServiceImpl)
         .passwordEncoder(passwordEncoder)
         .and()
         .build();

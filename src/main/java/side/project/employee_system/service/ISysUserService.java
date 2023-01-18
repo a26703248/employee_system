@@ -1,7 +1,8 @@
 package side.project.employee_system.service;
 
-import side.project.employee_system.entity.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import side.project.employee_system.entity.SysUser;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISysUserService extends IService<SysUser> {
 
+  public SysUser getByUsername(String username);
 }
