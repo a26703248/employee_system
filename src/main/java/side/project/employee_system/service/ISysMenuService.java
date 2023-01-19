@@ -1,7 +1,11 @@
 package side.project.employee_system.service;
 
-import side.project.employee_system.entity.SysMenu;
+import java.util.List;
+
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import side.project.employee_system.common.dto.SysMenuDto;
+import side.project.employee_system.entity.SysMenu;
 
 /**
  * <p>
@@ -12,5 +16,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2023-01-16
  */
 public interface ISysMenuService extends IService<SysMenu> {
+
+  public List<SysMenuDto> getCurrentNav();
 
 }

@@ -1,5 +1,9 @@
 package side.project.employee_system.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import lombok.Getter;
@@ -48,4 +52,7 @@ public class SysMenu extends BaseEntity {
      * 選單圖示
      */
     private String icon;
+
+    @TableField(exist = false)
+    private List<SysMenu> children = new ArrayList<>();
 }

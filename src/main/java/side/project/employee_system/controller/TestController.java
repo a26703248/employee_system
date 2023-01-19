@@ -35,7 +35,6 @@ public class TestController {
   public ResponseHandle password() {
     String encode = bCryptPasswordEncoder.encode("root");
     boolean matches = bCryptPasswordEncoder.matches("root", encode);
-    System.out.println("matches = " + matches);
     return ResponseHandle.success(encode);
   }
 

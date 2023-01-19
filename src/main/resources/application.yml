@@ -10,6 +10,8 @@ spring:
     user:
       name: user
       password: root
+  main:
+    allow-circular-references: true
 
 logging:
   pattern:
