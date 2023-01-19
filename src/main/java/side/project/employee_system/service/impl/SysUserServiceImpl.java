@@ -37,6 +37,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
   @Autowired
   private ISysMenuService iSysMenuService;
 
+
   public SysUser getByUsername(String username) {
     return getOne(new QueryWrapper<SysUser>().eq("username", username));
   }
@@ -45,8 +46,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
   public String getUserAuthorityInfo(Long userId) {
     // ROLE_admin,ROLE_normal
     String authority = "";
+    SysUser user = sysUserMapper.selectById(userId);
+    // TODO 增加快取減少資料庫搜尋次數
     String sql = "select role_id from sys_user_role where user_id = " + userId;
-    List<SysRole> list = isysRoleService.list();
     List<SysRole> roles = isysRoleService.list(new QueryWrapper<SysRole>().inSql("id", sql));
     if (roles.size() > 0) {
       // 將權限串接並加上 ROLE_
@@ -55,8 +57,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
           .collect(Collectors.joining(","));
       authority = roleCode.concat(",");
     }
+
     List<Long> menuId = sysUserMapper.getNavMenuId(userId);
-    if(menuId.size() > 0){
+    if (menuId.size() > 0) {
       List<SysMenu> menus = iSysMenuService.listByIds(menuId);
       String menuPerms = menus.stream().map(m -> m.getPerms()).collect(Collectors.joining(","));
       authority = authority.concat(menuPerms);

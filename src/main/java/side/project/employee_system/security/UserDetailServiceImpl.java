@@ -25,7 +25,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
     if(user == null){
       throw new UsernameNotFoundException("帳號不存在");
     }
-    String flag = "";
 
     return new AccountUser(user.getId(), user.getUsername(), user.getPassword(), true, true, true, true, getUserAuthority(8L));
   }

@@ -18,6 +18,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import side.project.employee_system.security.JwtAccessDeniedHandler;
 import side.project.employee_system.security.JwtAuthenticationEntryPoint;
 import side.project.employee_system.security.JwtAuthenticationFilter;
+import side.project.employee_system.security.JwtLogoutSuccessHandle;
 import side.project.employee_system.security.LoginFailureHandle;
 import side.project.employee_system.security.LoginSuccessHandle;
 import side.project.employee_system.security.UserDetailServiceImpl;
@@ -41,6 +42,9 @@ public class SecurityConfig {
 
   @Autowired
   private UserDetailServiceImpl userDetailServiceImpl;
+
+  @Autowired
+  private JwtLogoutSuccessHandle jwtLogoutSuccessHandle;
 
   @Bean
   public BCryptPasswordEncoder bcrCryptPasswordEncoder() {
@@ -78,8 +82,12 @@ public class SecurityConfig {
       .formLogin()
       .successHandler(loginSuccessHandle)
       .failureHandler(loginFailureHandle)
+      // 登出
       .and()
+      .logout()
+      .logoutSuccessHandler(jwtLogoutSuccessHandle)
       // 禁用 session
+      .and()
       .sessionManagement()
       .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
       .and()
