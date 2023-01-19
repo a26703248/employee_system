@@ -1,7 +1,12 @@
 package side.project.employee_system.mapper;
 
-import side.project.employee_system.entity.SysUser;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import side.project.employee_system.entity.SysUser;
 
 /**
  * <p>
@@ -12,5 +17,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2023-01-16
  */
 public interface SysUserMapper extends BaseMapper<SysUser> {
-
+  public List<Long> getNavMenuId(@Param("userId")Long userId);
 }

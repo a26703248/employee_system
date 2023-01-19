@@ -1,9 +1,10 @@
 package side.project.employee_system.security;
 
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,8 +25,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
     if(user == null){
       throw new UsernameNotFoundException("帳號不存在");
     }
+    String flag = "";
 
-    return new AccountUser(user.getId(), user.getUsername(), user.getPassword(), false, false, false, false, getUserAuthority(1L));
+    return new AccountUser(user.getId(), user.getUsername(), user.getPassword(), true, true, true, true, getUserAuthority(8L));
   }
 
   /**
@@ -33,8 +35,11 @@ public class UserDetailServiceImpl implements UserDetailsService {
    * @param userId
    * @return
    */
-  public Set<GrantedAuthority> getUserAuthority(Long userId) {
-    return null;
+  public List<GrantedAuthority> getUserAuthority(Long userId) {
+    // 取得角色
+    String authority = iSysUserService.getUserAuthorityInfo(userId);
+    // 取得是否有操作權限
+    return AuthorityUtils.commaSeparatedStringToAuthorityList(authority);
   }
 
 }

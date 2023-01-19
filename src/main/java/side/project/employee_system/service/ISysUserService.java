@@ -15,4 +15,7 @@ import side.project.employee_system.entity.SysUser;
 public interface ISysUserService extends IService<SysUser> {
 
   public SysUser getByUsername(String username);
+
+  public String getUserAuthorityInfo(Long userId);
+
 }

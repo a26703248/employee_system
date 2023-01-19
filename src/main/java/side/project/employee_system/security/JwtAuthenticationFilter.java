@@ -15,12 +15,20 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import cn.hutool.core.util.StrUtil;
 import io.jsonwebtoken.Claims;
+import side.project.employee_system.entity.SysUser;
+import side.project.employee_system.service.ISysUserService;
 import side.project.employee_system.utils.JwtUtils;
 
 public class JwtAuthenticationFilter  extends OncePerRequestFilter {
 
   @Autowired
   private JwtUtils jwtUtils;
+
+  @Autowired
+  private UserDetailServiceImpl userDetailServiceImpl;
+
+  @Autowired
+  private ISysUserService isysUserService;
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
@@ -41,9 +49,10 @@ public class JwtAuthenticationFilter  extends OncePerRequestFilter {
         }
 
         String username = claimsByToken.getSubject();
+        SysUser user = isysUserService.getByUsername(username);
 
         // 取得權限訊息
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, null, null);
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, null, userDetailServiceImpl.getUserAuthority(user.getId()));
 
         // 上下文認證配置
         SecurityContextHolder.getContext().setAuthentication(token);

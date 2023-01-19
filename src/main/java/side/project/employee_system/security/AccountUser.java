@@ -1,7 +1,6 @@
 package side.project.employee_system.security;
 
 import java.util.Collection;
-import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +14,7 @@ public class AccountUser implements UserDetails {
 
   private final String username;
 
-  private final Set<GrantedAuthority> authorities;
+  private final Collection<GrantedAuthority> authorities;
 
   private final boolean accountNonExpired;
 
@@ -27,7 +26,7 @@ public class AccountUser implements UserDetails {
 
   public AccountUser(Long userId, String username, String password, boolean enabled, boolean accountNonExpired,
       boolean credentialsNonExpired, boolean accountNonLocked,
-      Set<GrantedAuthority> authorities) {
+      Collection<GrantedAuthority> authorities) {
     Assert.isTrue(username != null && !"".equals(username) && password != null,
         "Cannot pass null or empty values to constructor");
     this.userId = userId;

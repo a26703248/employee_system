@@ -24,6 +24,7 @@ public class LoginFailureHandle implements AuthenticationFailureHandler {
         response.setContentType("application/json;charset=UTF-8");
 
         ServletOutputStream sos = response.getOutputStream();
+        // ResponseHandle rh = ResponseHandle.error("帳號或密碼錯誤");
         ResponseHandle rh = ResponseHandle.error(exception.getMessage());
 
         sos.write(JSONUtil.toJsonStr(rh).getBytes("UTF-8"));
