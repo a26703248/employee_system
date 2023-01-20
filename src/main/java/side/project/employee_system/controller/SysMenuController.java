@@ -58,20 +58,20 @@ public class SysMenuController extends BaseController {
   }
 
   @GetMapping("/info/{id}")
-  @PreAuthorize("hasAuthorize('sys:menu:list')")
+  @PreAuthorize("hasAuthority('sys:menu:list')")
   public ResponseHandle info(@PathVariable("id")Long id) {
     return ResponseHandle.success(iSysMenuService.getById(id));
   }
 
   @GetMapping("/list")
-  @PreAuthorize("hasAuthorize('sys:menu:list')")
+  @PreAuthorize("hasAuthority('sys:menu:list')")
   public ResponseHandle list() {
     List<SysMenu> list = iSysMenuService.tree();
     return ResponseHandle.success(list);
   }
 
   @PostMapping("/save")
-  @PreAuthorize("hasAuthorize('sys:menu:save')")
+  @PreAuthorize("hasAuthority('sys:menu:save')")
   public ResponseHandle save(@Validated @RequestBody SysMenu sysMenu) {
     sysMenu.setCreated(LocalDateTime.now());
     iSysMenuService.save(sysMenu);
@@ -79,7 +79,7 @@ public class SysMenuController extends BaseController {
   }
 
   @PostMapping("/update")
-  @PreAuthorize("hasAuthorize('sys:menu:update')")
+  @PreAuthorize("hasAuthority('sys:menu:update')")
   public ResponseHandle update(@Validated @RequestBody SysMenu sysMenu) {
     sysMenu.setUpdated(LocalDateTime.now());
     iSysMenuService.updateById(sysMenu);
@@ -87,7 +87,7 @@ public class SysMenuController extends BaseController {
   }
 
   @PostMapping("/delete/{id}")
-  @PreAuthorize("hasAuthorize('sys:menu:delete')")
+  @PreAuthorize("hasAuthority('sys:menu:delete')")
   public ResponseHandle delete(@PathVariable("id")Long id) {
     long count = iSysMenuService.count(new QueryWrapper<SysMenu>().eq("parent_id", id));
     if(count != 0)return ResponseHandle.error("請先清除子選單");
