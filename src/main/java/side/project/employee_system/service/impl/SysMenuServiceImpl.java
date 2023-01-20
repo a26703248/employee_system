@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import side.project.employee_system.common.dto.SysMenuDto;
@@ -47,6 +48,15 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     return convert(menuTree);
   }
 
+  @Override
+  public List<SysMenu> tree(){
+    // 取得所有選單
+    List<SysMenu> list = list(new QueryWrapper<SysMenu>().orderByAsc("id"));
+    // 轉換成樹狀結構
+    return buildTreeMenu(list);
+  }
+
+  // private function
   private List<SysMenu> buildTreeMenu(List<SysMenu> menus) {
     List<SysMenu> finalMenus = new ArrayList<>();
 
@@ -81,4 +91,6 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     });
     return menuDtos;
   }
+
+
 }

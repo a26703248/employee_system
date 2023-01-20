@@ -3,6 +3,9 @@ package side.project.employee_system.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -27,8 +30,10 @@ public class SysMenu extends BaseEntity {
     /**
      * 父選單ID，根選單為 0
      */
+    @NotNull(message="父選單未選擇")
     private Long parentId;
 
+    @NotBlank(message="選單名稱為填")
     private String name;
 
     /**
@@ -39,6 +44,7 @@ public class SysMenu extends BaseEntity {
     /**
      * 權限 多個用逗號分割，如: user:list,user:create
      */
+    @NotBlank(message="選單權限碼未輸入")
     private String perms;
 
     private String component;
@@ -46,6 +52,7 @@ public class SysMenu extends BaseEntity {
     /**
      * 類型 0:目錄 1:選單 2:按鈕
      */
+    @NotNull(message="選單類型為填寫")
     private Integer type;
 
     /**

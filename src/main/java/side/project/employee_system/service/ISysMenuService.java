@@ -19,4 +19,6 @@ public interface ISysMenuService extends IService<SysMenu> {
 
   public List<SysMenuDto> getCurrentNav();
 
+  public List<SysMenu> tree();
+
 }
