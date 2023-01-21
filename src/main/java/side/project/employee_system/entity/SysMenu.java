@@ -60,6 +60,8 @@ public class SysMenu extends BaseEntity {
      */
     private String icon;
 
+    private Integer orderNum;
+
     @TableField(exist = false)
     private List<SysMenu> children = new ArrayList<>();
 }

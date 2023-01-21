@@ -57,6 +57,9 @@ public class SysMenuController extends BaseController {
         .put("nav", nav).map());
   }
 
+  /**
+   * 取得單筆選單資料
+   */
   @GetMapping("/info/{id}")
   @PreAuthorize("hasAuthority('sys:menu:list')")
   public ResponseHandle info(@PathVariable("id")Long id) {
@@ -97,4 +100,5 @@ public class SysMenuController extends BaseController {
     iSysRoleMenuService.remove(new QueryWrapper<SysRoleMenu>().eq("menu_id", id));
     return ResponseHandle.success("success");
   }
+
 }

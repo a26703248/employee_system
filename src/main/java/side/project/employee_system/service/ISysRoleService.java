@@ -1,7 +1,10 @@
 package side.project.employee_system.service;
 
-import side.project.employee_system.entity.SysRole;
+import java.util.List;
+
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import side.project.employee_system.entity.SysRole;
 
 /**
  * <p>
@@ -12,5 +15,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2023-01-16
  */
 public interface ISysRoleService extends IService<SysRole> {
+
+  public List<SysRole> listRolesById(Long id);
 
 }

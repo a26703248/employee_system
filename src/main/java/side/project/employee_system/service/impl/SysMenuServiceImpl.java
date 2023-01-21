@@ -51,7 +51,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
   @Override
   public List<SysMenu> tree(){
     // 取得所有選單
-    List<SysMenu> list = list(new QueryWrapper<SysMenu>().orderByAsc("id"));
+    List<SysMenu> list = list(new QueryWrapper<SysMenu>().orderByAsc("order_num"));
     // 轉換成樹狀結構
     return buildTreeMenu(list);
   }
