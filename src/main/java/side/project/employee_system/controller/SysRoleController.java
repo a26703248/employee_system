@@ -84,7 +84,7 @@ public class SysRoleController extends BaseController {
     return ResponseHandle.success("success");
   }
 
-  @GetMapping("/perm/{roleId}")
+  @PostMapping("/perm/{roleId}")
   @Transactional
   @PreAuthorize("hasAuthority('sys:role:perm')")
   public ResponseHandle perm(@PathVariable("roleId") Long roleId, @RequestBody Long[] menuIds) {

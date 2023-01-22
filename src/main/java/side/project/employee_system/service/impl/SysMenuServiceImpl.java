@@ -20,7 +20,7 @@ import side.project.employee_system.service.ISysUserService;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author howard
@@ -41,6 +41,10 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     SysUser user = iSysUserService.getByUsername(username);
     List<Long> menuIds = sysUserMapper.getNavMenuId(user.getId());
+    // 若沒有則返回空
+    if (menuIds.size() == 0)
+      return new ArrayList<SysMenuDto>();
+
     List<SysMenu> menus = listByIds(menuIds);
     // 轉換成樹狀結構
     List<SysMenu> menuTree = buildTreeMenu(menus);
@@ -49,7 +53,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
   }
 
   @Override
-  public List<SysMenu> tree(){
+  public List<SysMenu> tree() {
     // 取得所有選單
     List<SysMenu> list = list(new QueryWrapper<SysMenu>().orderByAsc("order_num"));
     // 轉換成樹狀結構
@@ -62,11 +66,11 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     for (SysMenu menu : menus) {
       for (SysMenu e : menus) {
-        if(menu.getId() == e.getParentId()){
+        if (menu.getId() == e.getParentId()) {
           menu.getChildren().add(e);
         }
       }
-      if(menu.getParentId() == 0L){
+      if (menu.getParentId() == 0L) {
         finalMenus.add(menu);
       }
     }
@@ -74,9 +78,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     return finalMenus;
   }
 
-  private List<SysMenuDto> convert(List<SysMenu> menuTree){
+  private List<SysMenuDto> convert(List<SysMenu> menuTree) {
     List<SysMenuDto> menuDtos = new ArrayList<>();
-    menuTree.forEach(mt ->{
+    menuTree.forEach(mt -> {
       SysMenuDto dto = new SysMenuDto();
       dto.setId(mt.getId());
       dto.setName(mt.getPerms());
@@ -84,13 +88,12 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
       dto.setComponent(mt.getComponent());
       dto.setPath(mt.getPath());
       dto.setIcon(mt.getIcon());
-      if(mt.getChildren().size() > 0){
+      if (mt.getChildren().size() > 0) {
         dto.setChildren(convert(mt.getChildren()));
       }
       menuDtos.add(dto);
     });
     return menuDtos;
   }
-
 
 }
