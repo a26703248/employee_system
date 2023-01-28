@@ -2,31 +2,28 @@ package side.project.employee_system.security;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import side.project.employee_system.entity.SysUser;
-import side.project.employee_system.service.ISysUserService;
 
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
 
-  @Autowired
-  private ISysUserService iSysUserService;
+  // @Autowired
+  // private ISysUserService iSysUserService;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    SysUser user = iSysUserService.getByUsername(username);
-    if(user == null){
-      throw new UsernameNotFoundException("帳號不存在");
-    }
+    // SysUser user = iSysUserService.getByUsername(username);
+    // if(user == null){
+    //   throw new UsernameNotFoundException("帳號不存在");
+    // }
 
-    return new AccountUser(user.getId(), user.getUsername(), user.getPassword(), true, true, true, true, getUserAuthority(8L));
+    // return new AccountUser(user.getId(), user.getUsername(), user.getPassword(), true, true, true, true, getUserAuthority(8L));
+    return null;
   }
 
   /**
@@ -36,9 +33,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
    */
   public List<GrantedAuthority> getUserAuthority(Long userId) {
     // 取得角色
-    String authority = iSysUserService.getUserAuthorityInfo(userId);
+    // String authority = iSysUserService.getUserAuthorityInfo(userId);
     // 取得是否有操作權限
-    return AuthorityUtils.commaSeparatedStringToAuthorityList(authority);
+    // return AuthorityUtils.commaSeparatedStringToAuthorityList(authority);
+    return null;
   }
 
 }
