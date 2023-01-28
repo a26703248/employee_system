@@ -16,7 +16,6 @@ import side.project.employee_system.entity.SysUser;
 import side.project.employee_system.mapper.SysMenuMapper;
 import side.project.employee_system.mapper.SysUserMapper;
 import side.project.employee_system.service.ISysMenuService;
-import side.project.employee_system.service.ISysUserService;
 
 /**
  * <p>
@@ -29,17 +28,13 @@ import side.project.employee_system.service.ISysUserService;
 @Service
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements ISysMenuService {
 
-  // TODO 解決 allow-circular-references: true
-  @Autowired
-  private ISysUserService iSysUserService;
-
   @Autowired
   private SysUserMapper sysUserMapper;
 
   @Override
   public List<SysMenuDto> getCurrentNav() {
     String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    SysUser user = iSysUserService.getByUsername(username);
+    SysUser user = sysUserMapper.getByUsername(username);
     List<Long> menuIds = sysUserMapper.getNavMenuId(user.getId());
     // 若沒有則返回空
     if (menuIds.size() == 0)

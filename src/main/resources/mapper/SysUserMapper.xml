@@ -2,7 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="side.project.employee_system.mapper.SysUserMapper">
   <!-- public List<Long> getNavMenuId(Long userId); -->
-  <select id="getNavMenuId" resultType="long"> select distinct rm.menu_id from sys_user_role ur left join
-    sys_role_menu rm on ur.role_id = rm.role_id where ur.user_id = #{userId}; </select>
+  <select id="getNavMenuId" resultType="long"> select distinct rm.menu_id from sys_user_role ur left
+    join sys_role_menu rm on ur.role_id = rm.role_id where ur.user_id = #{userId}; </select>
+
+  <!-- public SysUser getByUsername(@Param("username") String username); -->
+  <select id="getByUsername" resultType="side.project.employee_system.entity.SysUser">
+    select id,username,password,avatar,email,mobile,created,updated,last_login,status from sys_user where username = #{username}
+  </select>
 
 </mapper>

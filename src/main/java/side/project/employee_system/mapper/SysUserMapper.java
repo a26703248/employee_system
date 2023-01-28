@@ -18,4 +18,7 @@ import side.project.employee_system.entity.SysUser;
  */
 public interface SysUserMapper extends BaseMapper<SysUser> {
   public List<Long> getNavMenuId(@Param("userId")Long userId);
+
+  public SysUser getByUsername(@Param("username") String username);
+
 }
