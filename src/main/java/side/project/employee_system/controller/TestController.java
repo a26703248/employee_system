@@ -3,6 +3,7 @@ package side.project.employee_system.controller;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -10,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cn.hutool.core.map.MapUtil;
 import side.project.employee_system.entity.SysUser;
 import side.project.employee_system.service.ISysUserService;
 import side.project.employee_system.utils.ResponseHandle;
@@ -76,6 +78,11 @@ public class TestController {
       System.out.println("is exist");
     }
 
+  }
+
+  @GetMapping("/status")
+  public Map<String, Object> testApiStatus() {
+    return MapUtil.<String, Object>builder().put("status", "success").map();
   }
 
 }

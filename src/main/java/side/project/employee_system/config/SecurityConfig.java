@@ -59,7 +59,8 @@ public class SecurityConfig {
   private static final String[] URL_WHITELIST = {
     "/login",
     "/logout",
-    "/favicon.ico"
+    "/favicon.ico",
+    "/status"
   };
 
   @Bean
@@ -105,4 +106,5 @@ public class SecurityConfig {
       .addFilterBefore(jwtAuthenticationFilter(), BasicAuthenticationFilter.class);
       return http.build();
   }
+
 }
