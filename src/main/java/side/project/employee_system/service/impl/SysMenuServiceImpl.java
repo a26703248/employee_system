@@ -2,6 +2,7 @@ package side.project.employee_system.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -58,7 +59,6 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
   // private function
   private List<SysMenu> buildTreeMenu(List<SysMenu> menus) {
     List<SysMenu> finalMenus = new ArrayList<>();
-
     for (SysMenu menu : menus) {
       for (SysMenu e : menus) {
         if (menu.getId() == e.getParentId()) {
@@ -66,10 +66,13 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         }
       }
       if (menu.getParentId() == 0L) {
+        menu.setChildren(menu.getChildren().stream().<SysMenu>sorted((a, b) -> a.getOrderNum() - b.getOrderNum())
+            .collect(Collectors.toList()));
         finalMenus.add(menu);
       }
     }
-
+    finalMenus = finalMenus.stream().<SysMenu>sorted((a, b) -> a.getOrderNum() - b.getOrderNum())
+        .collect(Collectors.toList());
     return finalMenus;
   }
 
