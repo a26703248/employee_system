@@ -1,5 +1,6 @@
 package side.project.employee_system.controller;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,9 +51,11 @@ public class SysRoleController extends BaseController {
 
   @GetMapping("/list")
   @PreAuthorize("hasAuthority('sys:role:list')")
-  public ResponseHandle list(String name) {
-    Page<SysRole> rolePage = iSysRoleService.page(getPage(),
-        new QueryWrapper<SysRole>().like(StrUtil.isNotBlank(name), "name", name));
+  public ResponseHandle list(String name, Principal principal) {
+    QueryWrapper<SysRole> query = new QueryWrapper<SysRole>()
+        .like(StrUtil.isNotBlank(name), "name", name);
+
+    Page<SysRole> rolePage = iSysRoleService.page(getPage(), query);
     return ResponseHandle.success(rolePage);
   }
 
@@ -64,7 +67,6 @@ public class SysRoleController extends BaseController {
     iSysRoleService.save(sysRole);
     return ResponseHandle.success(sysRole);
   }
-
 
   @PostMapping("/update")
   @PreAuthorize("hasAuthority('sys:role:update')")
@@ -89,7 +91,7 @@ public class SysRoleController extends BaseController {
   @PreAuthorize("hasAuthority('sys:role:perm')")
   public ResponseHandle perm(@PathVariable("roleId") Long roleId, @RequestBody Long[] menuIds) {
     List<SysRoleMenu> roleMenuList = new ArrayList<>();
-    Arrays.stream(menuIds).forEach( menuId -> {
+    Arrays.stream(menuIds).forEach(menuId -> {
       SysRoleMenu sysRoleMenu = new SysRoleMenu();
       sysRoleMenu.setMenuId(menuId);
       sysRoleMenu.setRoleId(roleId);
