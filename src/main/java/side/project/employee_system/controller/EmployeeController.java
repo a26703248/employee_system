@@ -1,14 +1,16 @@
 package side.project.employee_system.controller;
 
 import java.security.Principal;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,8 +18,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import cn.hutool.core.util.StrUtil;
+import side.project.employee_system.entity.Department;
 import side.project.employee_system.entity.Employee;
-import side.project.employee_system.entity.SysUser;
 import side.project.employee_system.utils.ResponseHandle;
 
 /**
@@ -35,35 +37,42 @@ public class EmployeeController extends BaseController {
   @GetMapping("/list")
   public ResponseHandle list(String empName, Principal principal) {
     Page<Employee> page = iEmployeeService.page(getPage(),
-        new QueryWrapper<Employee>().eq(StrUtil.isNotBlank(empName), "emp_name", empName));
+        new QueryWrapper<Employee>()
+            .like(StrUtil.isNotBlank(empName), "emp_name", empName)
+            .eq("status", 1));
 
-    List<Long> userIds = page.getRecords()
-        .stream()
-        .map(e -> e.getUserId())
-        .filter(e -> e != null)
-        .collect(Collectors.toList());
-    List<SysUser> userList = iSysUserService.list(new QueryWrapper<SysUser>().in("id", userIds));
-    Map<Long, SysUser> userMap = userList
-        .stream()
-        .collect(Collectors.toMap(SysUser::getId, Function.identity()));
-
-    page.getRecords().forEach(e -> e.setAccount(userMap.get(e.getUserId())));
+    // TODO dept list
     return ResponseHandle.success(page);
   }
 
   @GetMapping("/info/{id}")
   public ResponseHandle info(@PathVariable("id") Long id) {
-    return ResponseHandle.success(null);
+    Employee emp = iEmployeeService.getById(id);
+    List<Department> dept = iDepartmentService.list(
+        new QueryWrapper<Department>()
+            .eq("emp_id", emp.getId()));
+    return ResponseHandle.success(emp);
+  }
+
+  @PostMapping("/save")
+  public ResponseHandle save(@Validated @RequestBody Employee emp) {
+    emp.setEmpSequence(String.valueOf(Instant.now().getEpochSecond()));
+    emp.setCreated(LocalDateTime.now());
+    boolean res = iEmployeeService.save(emp);
+    return ResponseHandle.success(res);
   }
 
   @PostMapping("/update")
-  public ResponseHandle update(Employee emp) {
-    return ResponseHandle.success(null);
+  public ResponseHandle update(@Validated @RequestBody Employee emp) {
+    emp.setUpdated(LocalDateTime.now());
+    boolean res = iEmployeeService.updateById(emp);
+    return ResponseHandle.success(res);
   }
 
   @PostMapping("/delete")
-  public ResponseHandle delete(Long id) {
-    return ResponseHandle.success(null);
+  public ResponseHandle delete(@RequestBody Long[] ids) {
+    iEmployeeService.removeByIds(Arrays.asList(ids));
+    return ResponseHandle.success(ids);
   }
 
 }

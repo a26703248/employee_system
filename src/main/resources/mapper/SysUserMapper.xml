@@ -7,7 +7,7 @@
 
   <!-- public SysUser getByUsername(@Param("username") String username); -->
   <select id="getByUsername" resultType="side.project.employee_system.entity.SysUser">
-    select id,username,password,avatar,email,mobile,created,updated,last_login,status from sys_user where username = #{username}
+    select id,username,password,avatar,created,updated,last_login,status from sys_user where username = #{username}
   </select>
 
 </mapper>

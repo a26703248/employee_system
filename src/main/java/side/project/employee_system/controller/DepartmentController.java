@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2023-02-01
  */
 @RestController
-@RequestMapping("/emp/department")
+@RequestMapping("/dept/manage")
 public class DepartmentController extends BaseController {
 
 }

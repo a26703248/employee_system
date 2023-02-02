@@ -48,7 +48,6 @@ public class TestController {
       SysUser admin = new SysUser();
       admin.setUsername("admin");
       admin.setPassword(bCryptPasswordEncoder.encode("root"));
-      admin.setEmail("XXX@gmail.com");
       admin.setCreated(LocalDateTime.now());
       users.add(admin);
     }
@@ -57,7 +56,6 @@ public class TestController {
       SysUser test = new SysUser();
       test.setUsername("test");
       test.setPassword(bCryptPasswordEncoder.encode("1234"));
-      test.setEmail("OOO@gmail.com");
       test.setCreated(LocalDateTime.now());
       users.add(test);
     }
@@ -66,7 +64,6 @@ public class TestController {
       SysUser test2 = new SysUser();
       test2.setUsername("test2");
       test2.setPassword(bCryptPasswordEncoder.encode("1234"));
-      test2.setEmail("OOO@gmail.com");
       test2.setCreated(LocalDateTime.now());
       users.add(test2);
     }

@@ -1,10 +1,11 @@
 package side.project.employee_system.entity;
 
-import java.io.Serializable;
+import java.util.List;
 
-import com.baomidou.mybatisplus.annotation.IdType;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,25 +20,25 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class Employee implements Serializable {
-
-  @TableId(value = "id", type = IdType.AUTO)
-  private Long id;
+public class Employee extends BaseEntity {
 
   private static final long serialVersionUID = 1L;
 
   private String empSequence;
 
+  @NotBlank(message="員工姓名不可為空")
   private String empName;
 
+  @NotBlank(message="職務姓名不可為空")
   private String jobName;
 
-  private Long userId;
+  @Email(message = "Email 格式錯誤")
+  private String email;
+
+  @NotBlank(message = "請輸入行動電話")
+  private String mobile;
 
   @TableField(exist = false)
-  private Department dept;
-
-  @TableField(exist = false)
-  private SysUser account;
+  private List<Department> dept;
 
 }

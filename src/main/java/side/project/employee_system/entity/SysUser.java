@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -24,23 +23,18 @@ import lombok.Data;
 @TableName("sys_user")
 public class SysUser extends BaseEntity {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    @NotBlank(message="請輸入帳號")
-    private String username;
+  @NotBlank(message = "請輸入帳號")
+  private String username;
 
-    private String password;
+  private String password;
 
-    private String avatar;
+  private String avatar;
 
-    @Email(message="Email 格式錯誤")
-    private String email;
+  private LocalDateTime lastLogin;
 
-    @NotBlank(message="請輸入行動電話")
-    private String mobile;
+  @TableField(exist = false)
+  private List<SysRole> roles = new ArrayList<>();
 
-    private LocalDateTime lastLogin;
-
-    @TableField(exist = false)
-    private List<SysRole> roles = new ArrayList<>();
 }
