@@ -1,5 +1,7 @@
 package side.project.employee_system.entity;
 
+import javax.validation.constraints.NotBlank;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +21,7 @@ public class Department extends BaseEntity {
 
     private String deptSequence;
 
+    @NotBlank(message = "部門名稱不可為空")
     private String deptName;
 
     private String description;

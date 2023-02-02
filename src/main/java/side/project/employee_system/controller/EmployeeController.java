@@ -39,7 +39,6 @@ public class EmployeeController extends BaseController {
         new QueryWrapper<Employee>()
             .like(StrUtil.isNotBlank(empName), "emp_name", empName));
 
-    // TODO dept list
     return ResponseHandle.success(page);
   }
 
