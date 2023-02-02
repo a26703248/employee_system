@@ -3,6 +3,7 @@ package side.project.employee_system.controller;
 import java.time.Instant;
 import java.time.LocalDateTime;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +32,7 @@ import side.project.employee_system.utils.ResponseHandle;
 public class DepartmentController extends BaseController {
 
   @GetMapping("/list")
+  @PreAuthorize("hasAuthority('dept:manage:list')")
   public ResponseHandle list(String deptName) {
     Page<Department> page = iDepartmentService.page(
         getPage(),
@@ -41,12 +43,14 @@ public class DepartmentController extends BaseController {
   }
 
   @GetMapping("/info/{id}")
+  @PreAuthorize("hasAuthority('dept:manage:list')")
   public ResponseHandle info(@PathVariable Long id) {
     Department dept = iDepartmentService.getById(id);
     return ResponseHandle.success(dept);
   }
 
   @PostMapping("/save")
+  @PreAuthorize("hasAuthority('dept:manage:save')")
   public ResponseHandle save(@Validated @RequestBody Department dept) {
     dept.setDeptSequence(String.valueOf(Instant.now().getEpochSecond()));
     dept.setCreated(LocalDateTime.now());
@@ -55,6 +59,7 @@ public class DepartmentController extends BaseController {
   }
 
   @PostMapping("/update")
+  @PreAuthorize("hasAuthority('dept:manage:update')")
   public ResponseHandle update(@Validated @RequestBody Department dept) {
     dept.setUpdated(LocalDateTime.now());
     boolean res = iDepartmentService.updateById(dept);

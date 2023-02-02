@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,7 @@ import side.project.employee_system.utils.ResponseHandle;
 public class EmployeeController extends BaseController {
 
   @GetMapping("/list")
+  @PreAuthorize("hasAuthority('emp:manage:list')")
   public ResponseHandle list(String empName, Principal principal) {
     Page<Employee> page = iEmployeeService.page(getPage(),
         new QueryWrapper<Employee>()
@@ -43,12 +45,14 @@ public class EmployeeController extends BaseController {
   }
 
   @GetMapping("/info/{id}")
+  @PreAuthorize("hasAuthority('emp:manage:list')")
   public ResponseHandle info(@PathVariable("id") Long id) {
     Employee emp = iEmployeeService.getById(id);
     return ResponseHandle.success(emp);
   }
 
   @PostMapping("/save")
+  @PreAuthorize("hasAuthority('emp:manage:save')")
   public ResponseHandle save(@Validated @RequestBody Employee emp) {
     emp.setEmpSequence(String.valueOf(Instant.now().getEpochSecond()));
     emp.setCreated(LocalDateTime.now());
@@ -58,6 +62,7 @@ public class EmployeeController extends BaseController {
 
   @Transactional
   @PostMapping("/update")
+  @PreAuthorize("hasAuthority('emp:manage:update')")
   public ResponseHandle update(@Validated @RequestBody Employee emp) {
     emp.setUpdated(LocalDateTime.now());
     boolean res = iEmployeeService.updateById(emp);
@@ -65,6 +70,7 @@ public class EmployeeController extends BaseController {
   }
 
   @PostMapping("/delete")
+  @PreAuthorize("hasAuthority('emp:manage:delete')")
   public ResponseHandle delete(@RequestBody Long[] ids) {
     iEmployeeService.removeByIds(Arrays.asList(ids));
     return ResponseHandle.success(ids);

@@ -2,6 +2,7 @@ package side.project.employee_system.entity;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -34,6 +35,7 @@ public class Employee extends BaseEntity {
   @NotBlank(message = "請輸入行動電話")
   private String mobile;
 
+  @NotNull(message = "請選擇部門")
   private Long deptId;
 
 }
