@@ -1,7 +1,8 @@
 package side.project.employee_system.service;
 
-import side.project.employee_system.entity.Leave;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import side.project.employee_system.entity.EmpLeave;
 
 /**
  * <p>
@@ -11,6 +12,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author howard
  * @since 2023-02-01
  */
-public interface ILeaveService extends IService<Leave> {
+public interface IEmpLeaveService extends IService<EmpLeave> {
 
 }

@@ -10,8 +10,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import side.project.employee_system.entity.SysUser;
 import side.project.employee_system.service.IBusinessService;
 import side.project.employee_system.service.IDepartmentService;
+import side.project.employee_system.service.IEmpLeaveService;
 import side.project.employee_system.service.IEmployeeService;
-import side.project.employee_system.service.ILeaveService;
 import side.project.employee_system.service.ISysMenuService;
 import side.project.employee_system.service.ISysRoleMenuService;
 import side.project.employee_system.service.ISysRoleService;
@@ -48,7 +48,7 @@ public class BaseController {
   protected  IEmployeeService iEmployeeService;
 
   @Autowired
-  protected  ILeaveService iLeaveService;
+  protected  IEmpLeaveService iEmpLeaveService;
 
   public Page getPage() {
     int current = ServletRequestUtils.getIntParameter(req, "currentPage", 1);

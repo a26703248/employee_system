@@ -1,7 +1,10 @@
 package side.project.employee_system.service;
 
-import side.project.employee_system.entity.Employee;
+import java.util.List;
+
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import side.project.employee_system.entity.Employee;
 
 /**
  * <p>
@@ -12,5 +15,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2023-02-01
  */
 public interface IEmployeeService extends IService<Employee> {
+
+  public List<Employee> getByEmpName(String empName);
 
 }

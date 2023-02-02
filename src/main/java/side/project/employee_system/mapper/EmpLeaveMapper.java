@@ -1,7 +1,8 @@
 package side.project.employee_system.mapper;
 
-import side.project.employee_system.entity.Leave;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import side.project.employee_system.entity.EmpLeave;
 
 /**
  * <p>
@@ -11,6 +12,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author howard
  * @since 2023-02-01
  */
-public interface LeaveMapper extends BaseMapper<Leave> {
+public interface EmpLeaveMapper extends BaseMapper<EmpLeave> {
 
 }
