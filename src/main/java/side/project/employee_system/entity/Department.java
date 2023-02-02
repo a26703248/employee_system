@@ -17,9 +17,11 @@ public class Department extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
+    private String deptSequence;
+
     private String deptName;
 
     private String description;
 
-    private Integer empId;
+    private String tel;
 }

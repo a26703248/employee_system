@@ -4,8 +4,8 @@ import java.security.Principal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +18,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import cn.hutool.core.util.StrUtil;
-import side.project.employee_system.entity.Department;
 import side.project.employee_system.entity.Employee;
 import side.project.employee_system.utils.ResponseHandle;
 
@@ -48,9 +47,6 @@ public class EmployeeController extends BaseController {
   @GetMapping("/info/{id}")
   public ResponseHandle info(@PathVariable("id") Long id) {
     Employee emp = iEmployeeService.getById(id);
-    List<Department> dept = iDepartmentService.list(
-        new QueryWrapper<Department>()
-            .eq("emp_id", emp.getId()));
     return ResponseHandle.success(emp);
   }
 
@@ -62,6 +58,7 @@ public class EmployeeController extends BaseController {
     return ResponseHandle.success(res);
   }
 
+  @Transactional
   @PostMapping("/update")
   public ResponseHandle update(@Validated @RequestBody Employee emp) {
     emp.setUpdated(LocalDateTime.now());

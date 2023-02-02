@@ -1,11 +1,7 @@
 package side.project.employee_system.entity;
 
-import java.util.List;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-
-import com.baomidou.mybatisplus.annotation.TableField;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -38,7 +34,6 @@ public class Employee extends BaseEntity {
   @NotBlank(message = "請輸入行動電話")
   private String mobile;
 
-  @TableField(exist = false)
-  private List<Department> dept;
+  private Long deptId;
 
 }
