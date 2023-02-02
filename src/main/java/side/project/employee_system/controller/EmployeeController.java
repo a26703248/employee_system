@@ -37,8 +37,7 @@ public class EmployeeController extends BaseController {
   public ResponseHandle list(String empName, Principal principal) {
     Page<Employee> page = iEmployeeService.page(getPage(),
         new QueryWrapper<Employee>()
-            .like(StrUtil.isNotBlank(empName), "emp_name", empName)
-            .eq("status", 1));
+            .like(StrUtil.isNotBlank(empName), "emp_name", empName));
 
     // TODO dept list
     return ResponseHandle.success(page);

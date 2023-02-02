@@ -35,8 +35,7 @@ public class DepartmentController extends BaseController {
     Page<Department> page = iDepartmentService.page(
         getPage(),
         new QueryWrapper<Department>()
-            .like(StrUtil.isNotBlank(deptName), "dept_name", deptName)
-            .eq("status", 1));
+            .like(StrUtil.isNotBlank(deptName), "dept_name", deptName));
 
     return ResponseHandle.success(page);
   }
