@@ -19,5 +19,5 @@ logging:
 side-project:
   jwt:
     header: Authorization
-    expire: 604800 # 7 天(秒單位)
+    expire: 604800 # second
     secret: abcdefghijklmnopqrstuvwxyz12345
